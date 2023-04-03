@@ -1,0 +1,30 @@
+server:
+    port: 0
+
+eureka:
+    client:
+        service-url:
+            default-zone: http://localhost:8761/eureka
+spring:
+    application:
+        name: auth-service
+    output:
+        ansi:
+            enabled: always
+    datasource:
+        url: jdbc:postgresql://localhost:5432/sp_auth
+        username: krcode
+        password: ''
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+    level:
+        root: debug
