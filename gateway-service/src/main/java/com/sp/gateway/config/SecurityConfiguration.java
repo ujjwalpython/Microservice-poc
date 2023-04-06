@@ -28,7 +28,7 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeExchange()
-                .pathMatchers(jwtConfig().getUri())
+                .pathMatchers("/**")
                 .permitAll()
                 .anyExchange()
                 .authenticated();

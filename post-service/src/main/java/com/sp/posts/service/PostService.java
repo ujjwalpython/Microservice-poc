@@ -1,7 +1,10 @@
 package com.sp.posts.service;
 
-import org.springframework.stereotype.Service;
+import com.sp.posts.domain.Post;
+import com.sp.posts.dto.PostDto;
 
-@Service
-public class PostService {
+public interface PostService {
+    Post createPosts(PostDto postDto);
+
+    Post getPost(Long postId);
 }
