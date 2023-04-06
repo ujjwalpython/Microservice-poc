@@ -1,7 +1,8 @@
 package com.sp.authservice.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sp.commonservice.security.JwtConfig;
+
+import com.sp.authservice.config.JwtConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,16 +28,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    @Autowired
-    private  JwtConfig jwtConfig;
-    @Override
-    @Autowired
+    private JwtConfig jwtConfig;
+    private AuthenticationManager authenticationManager;
+    /*@Override
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
        super.setAuthenticationManager(authenticationManager);
-    }
+    }*/
 
+    public JwtUserAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager,JwtConfig jwtConfig) {
+        this.authenticationManager = authenticationManager;
+        this.jwtConfig = jwtConfig;
+        setFilterProcessesUrl("/auth/**");
+    }
     @Override
     public Authentication attemptAuthentication(
         HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -56,7 +62,7 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
 
             // 3. Authentication manager authenticate the user, and use
             // UserDetailsServiceImpl::loadUserByUsername() method to load the user.
-           return super.getAuthenticationManager().authenticate(authToken);
+           return authenticationManager.authenticate(authToken);
         } catch (IOException e) {
             System.out.println("[][][][========= failed to get the solution matters");
             throw new RuntimeException(e);

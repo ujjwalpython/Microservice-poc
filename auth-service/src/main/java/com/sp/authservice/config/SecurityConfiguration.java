@@ -1,13 +1,18 @@
 package com.sp.authservice.config;
 
 import com.sp.authservice.filter.JwtUserAndPasswordAuthenticationFilter;
-import com.sp.commonservice.security.JwtConfig;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.HttpMethod;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +26,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
   private final JwtConfig jwtConfig;
+  private final AuthenticationProvider authenticationProvider;
+
+   @Bean
+   public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+       return authenticationConfiguration.getAuthenticationManager();
+   }
 
     @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,8 +48,8 @@ public class SecurityConfiguration {
                     .anyRequest()
                     .authenticated())
         .formLogin().disable()
-        .addFilterBefore(new JwtUserAndPasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-
+        .authenticationProvider(authenticationProvider)
+        .apply(MyCustomDsl.customDsl()).and()
         .exceptionHandling(
             httpSecurityExceptionHandlingConfigurer ->
                 httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(
