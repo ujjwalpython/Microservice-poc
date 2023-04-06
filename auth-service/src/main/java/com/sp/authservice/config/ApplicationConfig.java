@@ -1,7 +1,6 @@
 package com.sp.authservice.config;
 
 import com.sp.authservice.repo.UserPoolRepository;
-import com.sp.commonservice.security.JwtConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,8 +47,15 @@ public class ApplicationConfig {
     return authenticationProvider;
   }
 
-  @Bean
-  AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-  }
+
+    /*@Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http)
+        throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+            .userDetailsService(authService)
+            .passwordEncoder(passwordEncoder())
+            .and()
+            .build();
+    }*/
+
 }
