@@ -147,13 +147,22 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public Post createPosts(@RequestBody PostDto postDto){
+    public PostDto createPosts(@RequestBody PostDto postDto){
        return postService.createPosts(postDto);
     }
 
     @GetMapping("/{postId}")
-    public Post createPosts(@PathVariable Long postId){
+    public PostDto createPosts(@PathVariable Long postId){
         return postService.getPost(postId);
     }
 
+    @PutMapping("/{postId}")
+    public PostDto updatePosts(@RequestBody PostDto postDto,@PathVariable Long postId){
+        return postService.updatePost(postDto,postId);
+    }
+
+    @DeleteMapping("/{postId}")
+    public void deletePosts(@PathVariable Long postId){
+         postService.deletePost(postId);
+    }
 }
