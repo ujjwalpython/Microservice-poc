@@ -4,7 +4,11 @@ import com.sp.posts.domain.Post;
 import com.sp.posts.dto.PostDto;
 
 public interface PostService {
-    Post createPosts(PostDto postDto);
+    PostDto createPosts(PostDto postDto);
 
-    Post getPost(Long postId);
+    PostDto getPost(Long postId);
+
+    PostDto updatePost(PostDto postDto, Long postId);
+
+    void deletePost(Long postId);
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.sp.posts.dto.PostDto;
 import com.sp.posts.service.PostService;
 
+import jakarta.ws.rs.PUT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
@@ -147,13 +148,22 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public Post createPosts(@RequestBody PostDto postDto){
+    public PostDto createPosts(@RequestBody PostDto postDto){
        return postService.createPosts(postDto);
     }
 
     @GetMapping("/{postId}")
-    public Post createPosts(@PathVariable Long postId){
+    public PostDto createPosts(@PathVariable Long postId){
         return postService.getPost(postId);
     }
 
+    @PutMapping("/{postId}")
+    public PostDto updatePosts(@RequestBody PostDto postDto,@PathVariable Long postId){
+        return postService.updatePost(postDto,postId);
+    }
+
+    @DeleteMapping("/{postId}")
+    public void deletePosts(@PathVariable Long postId){
+         postService.deletePost(postId);
+    }
 }
