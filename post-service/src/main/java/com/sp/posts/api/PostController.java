@@ -3,20 +3,22 @@ package com.sp.posts.api;
 import com.sp.posts.domain.Post;
 import java.util.Arrays;
 import java.util.List;
+
+import com.sp.posts.dto.PostDto;
+import com.sp.posts.service.PostService;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class PostController {
 
-    private Environment env;
+    private final Environment env;
+    private final PostService postService;
 
-    public PostController(Environment env) {
-        this.env = env;
-    }
 
     @GetMapping(path = "/")
     public String home() {
@@ -144,5 +146,14 @@ public class PostController {
 
     }
 
+    @PostMapping("/create")
+    public Post createPosts(@RequestBody PostDto postDto){
+       return postService.createPosts(postDto);
+    }
+
+    @GetMapping("/{postId}")
+    public Post createPosts(@PathVariable Long postId){
+        return postService.getPost(postId);
+    }
 
 }
