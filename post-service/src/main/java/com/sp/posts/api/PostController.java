@@ -7,7 +7,6 @@ import java.util.List;
 import com.sp.posts.dto.PostDto;
 import com.sp.posts.service.PostService;
 
-import jakarta.ws.rs.PUT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
