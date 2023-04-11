@@ -10,5 +10,6 @@ import lombok.Setter;
 public class Post {
     private Long postId;
     private String title;
+    private String userId;
     private String description;
 }

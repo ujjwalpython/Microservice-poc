@@ -10,3 +10,49 @@ spring:
     output:
         ansi:
             enabled: always
+
+    cloud:
+        openfeign:
+            circuitbreaker:
+                enabled: true
+                alphanumeric-ids:
+                        enabled: true
+
+#resilience4j:
+#    circuitbreaker:
+#        instances:
+#            PostServiceClient_getUserPosts_String:
+#            register-health-indicator: true
+#            slidingWindowSize: 5
+#            failureRateThreshold: 50
+#            waitDurationInOpenState: 3000ms
+#            slowCallRateThreshold: 50
+#            slowCallDurationThreshold: 200ms
+
+resilience4j:
+    circuitbreaker:
+        configs:
+            default:
+                registerHealthIndicator: true
+        instances:
+            PostServiceClient:
+#                slidingWindowType: count
+                minimumNumberOfCalls: 10
+                failureRateThreshold: 50
+                slowCallRateThreshold: 50
+                slowCallDurationThreshold: 200ms
+                automaticTransitionFromOpenToHalfOpenEnabled: true
+                permittedNumberOfCallsInHalfOpenState: 5
+                waitDurationInOpenState: 3000ms
+
+management:
+    health:
+        circuitbreakers:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: health
+    endpoint:
+        health:
+            show-details: always

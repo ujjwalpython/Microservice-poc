@@ -1,11 +1,12 @@
 package com.sp.userpostservice.client;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(value = "post-service")
+@FeignClient(name = "post-service",fallbackFactory =PostClientFallBackFactory.class )
 public interface PostServiceClient {
 
     @GetMapping("/posts")
@@ -22,4 +23,7 @@ public interface PostServiceClient {
 
     @DeleteMapping("/posts/{id}")
     void deletePost(@PathVariable long id);
+
+    @GetMapping("/user-posts/{userId}")
+    List<Post> getUserPosts(@PathVariable String userId);
 }
