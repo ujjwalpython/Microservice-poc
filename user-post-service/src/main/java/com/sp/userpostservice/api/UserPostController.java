@@ -1,12 +1,10 @@
 package com.sp.userpostservice.api;
 
+import com.sp.userpostservice.client.Post;
 import com.sp.userpostservice.client.PostServiceClient;
 import java.util.List;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/")
@@ -26,7 +24,18 @@ public class UserPostController {
     }
 
     @GetMapping(path = "{id}/posts")
-    public List<Object> getPosts(@PathVariable String id) {
-        return this.postServiceClient.getAll();
+    public List<Post> getPosts(@PathVariable String id) {
+        return this.postServiceClient.getUserPosts(id);
     }
+
+    @GetMapping(path = "/posts/{postId}")
+    public Post getPostsById(@PathVariable Long postId) {
+        return this.postServiceClient.getPost(postId);
+    }
+
+    @DeleteMapping(path = "/posts/{postId}")
+    public void deletePostsById(@PathVariable Long postId) {
+         this.postServiceClient.deletePost(postId);
+    }
+
 }

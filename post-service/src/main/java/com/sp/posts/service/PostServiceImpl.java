@@ -7,6 +7,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -59,5 +61,10 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new EntityNotFoundException("post with id " + postId + " not exists"));
         postRepository.delete(post);
+    }
+
+    @Override
+    public List<Post> getUserPosts(String userId) {
+        throw new EntityNotFoundException("user not found");
     }
 }
