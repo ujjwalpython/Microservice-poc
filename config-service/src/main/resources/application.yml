@@ -1,5 +1,6 @@
 server:
-    port: 0
+    port: 8888
+
 spring:
     application:
             name: config-service
@@ -7,4 +8,74 @@ spring:
         ansi:
             enabled: always
 
+    cloud:
+        config:
+            server:
+                git:
+                    uri: git@github.com:Ujjwal-1000/gitconfig.git
+                    ignore-local-ssh-settings: true
+                    private-key: |
+                                -----BEGIN OPENSSH PRIVATE KEY-----
+                                b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
+                                NhAAAAAwEAAQAAAgEAtlINwM3vQN0NX4vnpR1ntFpB3OsjwBDBOlVyekp9AaKw4MDZwh6q
+                                eN12hg2dS/JhyXkoYCIrHhOHSxwvs+4PDhagjGiwtRM1rhb/UWHvft8Ba1cjSzZaCbRWKz
+                                elJTn54+cnTbNwISgDPwwK+24QjhG/qdc22g8LQ4MD7QCr7Ds+gNkDHL8khj2txvyh+x1y
+                                APfJsRY1mL9Bm2tEASouSvZvyvcX5/Sm7JTc9B3LHTBxs17Ffj1ite74sPEctf6+xdzC38
+                                z7S11n/yqJ7tiRjiZlmb97VheIjXQUSxBgOtdZwA8D9JJyzCrO+HAJnC6DJpw3JrjxhipK
+                                BJVn7b5b059vcAfBMU6BP9yswEsyTdhnTqo2+ZuaKPxJPyknAVocsdPu2PvbTM+75zh/jO
+                                Nx9bPkz4lcT10rgMAJ/HEP9dmzj7TwZdJ/Q2HoJpm4zrJmEm3bCV0Sy+yf+rjWXL7QrLuP
+                                XOHaFSZ0FxbfKO6/bTGn74JZjna854p/dvOX1tZexnYEO/Kx4qelKBCW61IJk04zg1DM0k
+                                qQ04U+LU0MbnRTxkDivfklynp2CAy2Hk9FF0/kzi6pW1dF7KZUodKAqtyqnnkXYSKsinYX
+                                eLr6Oli2warkfGFqiJ8M8PxGCwYDf9G9RaY8AN3hm/BFxbtsED3k5vHrWWDbF8oaFt/hwS
+                                0AAAdQoJMdxKCTHcQAAAAHc3NoLXJzYQAAAgEAtlINwM3vQN0NX4vnpR1ntFpB3OsjwBDB
+                                OlVyekp9AaKw4MDZwh6qeN12hg2dS/JhyXkoYCIrHhOHSxwvs+4PDhagjGiwtRM1rhb/UW
+                                Hvft8Ba1cjSzZaCbRWKzelJTn54+cnTbNwISgDPwwK+24QjhG/qdc22g8LQ4MD7QCr7Ds+
+                                gNkDHL8khj2txvyh+x1yAPfJsRY1mL9Bm2tEASouSvZvyvcX5/Sm7JTc9B3LHTBxs17Ffj
+                                1ite74sPEctf6+xdzC38z7S11n/yqJ7tiRjiZlmb97VheIjXQUSxBgOtdZwA8D9JJyzCrO
+                                +HAJnC6DJpw3JrjxhipKBJVn7b5b059vcAfBMU6BP9yswEsyTdhnTqo2+ZuaKPxJPyknAV
+                                ocsdPu2PvbTM+75zh/jONx9bPkz4lcT10rgMAJ/HEP9dmzj7TwZdJ/Q2HoJpm4zrJmEm3b
+                                CV0Sy+yf+rjWXL7QrLuPXOHaFSZ0FxbfKO6/bTGn74JZjna854p/dvOX1tZexnYEO/Kx4q
+                                elKBCW61IJk04zg1DM0kqQ04U+LU0MbnRTxkDivfklynp2CAy2Hk9FF0/kzi6pW1dF7KZU
+                                odKAqtyqnnkXYSKsinYXeLr6Oli2warkfGFqiJ8M8PxGCwYDf9G9RaY8AN3hm/BFxbtsED
+                                3k5vHrWWDbF8oaFt/hwS0AAAADAQABAAACAQCeAlMFC/UUg/+5FOk3glqERczbB7a+GEc+
+                                pRtHvRLFvhgJUVnoEOexRE4aM+ZlEbWKBMTnO/WeZVJV2CHHkMPfc+DEj17GL9XQAQJZp8
+                                UGcYMrYiOmZX529qHPZrRrpOlbiNPZVXASbDkUBP3nliYm2l7/dROGvI8IfZ2DY5ecbmPn
+                                CyzVVxrydLYMxJolpglNqXJVVWgx71+OsNIJKGNieF2+y5MeZjvcwc8UilWkAH4p9DK5C7
+                                5m6qsBvpUhbZwsov0JNP98+4DL9jQAmhTb248mRns/y7l+zmFgBNtBY63W86x75Ag1xcwG
+                                KCNMBkuHxM9Pce1wV2o6urmNo/Kz6M4PYHwMx6SD4cEcZJ+/1iiEzRGa+h+DrHTDBCFTgf
+                                17KO03W6BRTJvTToQyHUlsXaLLI0BN8BjUAi9NRek1hrjYl4WKTHnSDKFWcU35DgJ0WCh8
+                                hEchAdj3mH3T89Ki5CUiC6M/FsrXO5M8umy5aMkcryOVBij7dMKTSqClFsnD7ezUhHmqzs
+                                hufXUzGbdeoR6S6hWGAEsVELmX3O8Ikg4CvZ0b3Uyn6GHbnjVj1mIv9fYZQno/D5WNifSD
+                                b0SAGwgMWhGuGgOr43y1yPcB9DQbmg7cEWz29GjE6nsfut+ZSmzXGoZsuj3NWv5XoyX4Eq
+                                hCqbr3BiIBzOCWZlSQSQAAAQEAtfZqkVZr9qRXp1WF4jMsLjdmfx/ZAHtXaiInYlbHrF7r
+                                X/8ykBEEW7P08rWORaVP4hAu/exd+PF46R1KW6sR26ni6cKhOD6juNjzeUa1fhhDPi1S5L
+                                5k6r9sHZQsIoToZWxSzeJWy17cQGeDM1PeH7+77B1HlkoT6Lnu5QxNt3mJDiIJGb+7hLiW
+                                MXgbH1XAMKoO8yCbFISIs5PixR4od1rLL2wt9CNA2kLfy67nEOocEBfdQR8Rs6heo641l4
+                                FEFnbxObGGh2wWGXNjwQXrXYNHz8oSQ5ay/HANi5Bia9kJ1YSos5M5qD7JRwchiXIUckB2
+                                vl51Tv1rbx+pztgDpAAAAQEA3rZSbR0p180D711lvmB4DKhKITB1MZpkhHvLNNew75KkIw
+                                X8TNTx8n+EnOQ89Hrk1H/9ZW4/pczcDsAMqJlsH6jWjlCXEmsMb5b3dUG3h9ouiZsmmemO
+                                IJK7tP2uDFNxw38xgR3ISJk6qBlPCDLC/G83ViMtKwsdKhu5WSoBVkL1q5NYZNh67yPoXc
+                                dp5LM2PVWhOEvg0cd4QTxVx+TX7xichY+GMIXoQyLyaJCzqfgwrEuSfxYzHWZCXuscQ6MG
+                                jMylqYGDQ7ALq4KavTwNThcWtw6CbSjTnGAHVvMJJMZZ39f10MlrweOvkmafWL5keN8HbM
+                                pFQcvpwzrhd/x5AwAAAQEA0ZI3ubBdOmRQhhBFL+hXjwFp2ZgnWcC/qdbronCBvK7c9RV2
+                                ykSPJMBGeOvoO+6hR1DOLs3GhH0stM668bX09A6RBGDAsBGgCM+R+4LKIRMT3Q1koR/TFt
+                                XYnSXe6GbTixHmO+NLFONe3Dbve4q+3LKh8Sq5RLVTbsIoQZenL94b2JljewkMrFkOj7yn
+                                aN+EH4J8a1gUoPoVDagJqjV0UJyGI9tUJnGwPE+BfTxG4vfCI5pRgdHokS82UeVNHGIX4P
+                                QD0SLAgzPjo6VG0jVw/JHppZtWTi3/99B38Qbqc5BL2//KDcx6ObNyuQbUGGR6QC0bW5DD
+                                fddRXkq1Z/2ODwAAABR1amp3YWxAcmFkaWFuc3lzLmNvbQECAwQF
+                                -----END OPENSSH PRIVATE KEY-----
+#update prop to local folder not creating new folder each time server starts
+#and config is requested,create itself if not present
+                    basedir: ~\config
+                    default-label: main
+                    force-pull: true
+                    clone-on-start: true
+                    deleteUntrackedBranches: true
+
+#                    tryMasterBranch: true
+
+eureka:
+    client:
+        service-url:
+            default-zone: http://localhost:8761/eureka
 
