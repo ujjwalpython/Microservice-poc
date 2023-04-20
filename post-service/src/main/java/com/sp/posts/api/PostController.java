@@ -170,4 +170,5 @@ public class PostController {
     public void deletePosts(@PathVariable Long postId){
          postService.deletePost(postId);
     }
+
 }

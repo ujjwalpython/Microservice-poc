@@ -1,12 +1,12 @@
 server:
     port: 0
-eureka:
-    client:
-        service-url:
-            default-zone: http://localhost:8761/eureka
+
 spring:
     application:
         name: post-service
+    config:
+        import: optional:configserver:http://localhost:8888
+
     output:
         ansi:
             enabled: always
@@ -22,3 +22,14 @@ spring:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
                 format_sql: true
         show-sql: true
+
+management:
+    tracing:
+        sampling:
+            probability: 1.0
+
+logging:
+    pattern:
+        level: "%10p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+    file:
+        path: logs/${spring.application.name}
