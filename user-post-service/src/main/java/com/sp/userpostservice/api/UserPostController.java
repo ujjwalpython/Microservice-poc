@@ -3,10 +3,13 @@ package com.sp.userpostservice.api;
 import com.sp.userpostservice.client.Post;
 import com.sp.userpostservice.client.PostServiceClient;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
 @RequestMapping(path = "/")
 public class UserPostController {
 
@@ -20,6 +23,7 @@ public class UserPostController {
 
     @GetMapping(path = "/")
     public String home() {
+        log.info("api success!!!!!!!!!!!!!!!");
         return "Hello from User Post Service running at port: " + env.getProperty("local.server.port");
     }
 
