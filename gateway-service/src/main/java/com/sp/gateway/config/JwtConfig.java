@@ -1,4 +1,4 @@
-package com.sp.authservice.config;
+package com.sp.gateway.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +17,6 @@ public class JwtConfig {
     @Value("${security.jwt.expiration:#{24*60*60}}")
     private int expiration=24*60*60;
 
+//    @Value("${security.jwt.secret}")
     private  String secret="JwtSecretKeyJwtSecretKeyJwtSecretKeyJwtSecretKeyJwtSecretKeyJwtSecretKeyJwtSecretKeyJwtSecretKey";
-
 }

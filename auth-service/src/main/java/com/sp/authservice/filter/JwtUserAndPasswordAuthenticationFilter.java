@@ -93,6 +93,7 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
 
         // Add token to header
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        logger.info("header added to response");
     }
 
     @Override
