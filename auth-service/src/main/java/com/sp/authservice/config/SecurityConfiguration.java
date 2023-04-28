@@ -43,7 +43,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
             request ->
                 request
-                    .requestMatchers(HttpMethod.POST, jwtConfig.getUri())
+                    .requestMatchers(HttpMethod.POST, jwtConfig.getUri(),"/validateToken/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())

@@ -1,18 +1,22 @@
 package com.sp.gateway.config;
 
-import com.sp.commonservice.security.JwtConfig;
+
+import com.sp.gateway.filter.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 
-@Configuration
-@EnableWebFluxSecurity
+
+
+//@Configuration
+//@EnableWebFluxSecurity
+//@RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    /*private final AuthClient authClient;
     @Bean
     public JwtConfig jwtConfig() {
         return new JwtConfig();
@@ -22,7 +26,17 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    *//*@Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+
+        return jwtAuthenticationConverter;
+    }*//*
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception {
         http.csrf()
@@ -31,8 +45,14 @@ public class SecurityConfiguration {
                 .pathMatchers("/**")
                 .permitAll()
                 .anyExchange()
-                .authenticated();
+                .authenticated()
+//            .and().addFilterBefore(new JwtAuthenticationFilter(jwtConfig()), SecurityWebFiltersOrder.FIRST)
+        ;
         
         return http.build();
     }
+
+
+
+*/
 }
