@@ -54,13 +54,12 @@ public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFi
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String authorizationHeader =
             exchange.getRequest().getHeaders().getFirst(jwtConfig.getHeader());
-
+        try{
         if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getPrefix())) {
             throw new UnauthorizedException("missing authorization header");
         }
 //        if (authorizationHeader != null && authorizationHeader.startsWith(jwtConfig.getPrefix())) {
             String token = authorizationHeader.replace(jwtConfig.getPrefix(), "");
-            try {
                 Claims claims =
                     Jwts.parserBuilder()
                         .setSigningKey(jwtConfig.getSecret())
