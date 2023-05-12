@@ -10,12 +10,6 @@ spring:
         ansi:
             enabled: always
     cloud:
-#        openfeign:
-#            circuitbreaker:
-#                enabled: true
-#                alphanumeric-ids:
-#                    enabled: true
-
         gateway:
             discovery:
                 locator:
@@ -26,21 +20,18 @@ spring:
                     predicates:
                         - Path=/auth/**
                     filters:
-#                        - JwtAuthenticationFilter
                         - RewritePath=/auth/(?<path>.*), /$\{path}
                 -   id: user-post-service
                     uri: lb://user-post-service
                     predicates:
                         - Path=/users/**
                     filters:
-#                        - JwtAuthenticationFilter
                         - RewritePath=/users/(?<path>.*), /$\{path}
                 -   id: post-service
                     uri: lb://post-service
                     predicates:
                         - Path=/posts/**
                     filters:
-#                        - JwtAuthenticationFilter
                         - RewritePath=/posts/(?<path>.*), /$\{path}
                 -   id: openapi
                     uri: http://localhost:${server.port}
@@ -67,41 +58,3 @@ springdoc:
 logging:
     level:
         root: debug
-
-#resilience4j:
-#    circuitbreaker:
-#        configs:
-#            default:
-#                registerHealthIndicator: true
-#        instances:
-#            Client:
-#                #                slidingWindowType: count
-#                minimumNumberOfCalls: 10
-#                failureRateThreshold: 50
-#                slowCallRateThreshold: 50
-#                slowCallDurationThreshold: 200ms
-#                automaticTransitionFromOpenToHalfOpenEnabled: true
-#                permittedNumberOfCallsInHalfOpenState: 5
-#                waitDurationInOpenState: 3000ms
-
-management:
-    health:
-        circuitbreakers:
-            enabled: true
-    endpoints:
-        web:
-            exposure:
-                include: health
-    endpoint:
-        health:
-            show-details: always
-
-#reactive:
-#    feign:
-#        client:
-#            config:
-#                auth-service:
-#                    options:
-#                        readTimeoutMillis: 2000
-#                        writeTimeoutMillis: 2000
-#                        responseTimeoutMillis: 2000
