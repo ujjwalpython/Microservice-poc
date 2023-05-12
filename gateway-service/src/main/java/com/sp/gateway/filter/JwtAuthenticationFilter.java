@@ -22,61 +22,39 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
-import java.io.ObjectInputFilter;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config>*/ {
 
-//    private final RouteValidator validator;
 
     @Autowired
     private JwtConfig jwtConfig;
-//    private final AuthClient authClient;
-
-   /* private final WebClient.Builder webClientBuilder;
-    private final RestTemplate restTemplate;
-*/
-   /* public JwtAuthenticationFilter(RouteValidator validator, *//*AuthClient authClient,*//* JwtConfig jwtConfig*//* WebClient.Builder builder, RestTemplate restTemplate*//*) {
-        this.validator = validator;
-//        this.authClient = authClient;
-        this.jwtConfig = jwtConfig;
-        *//*this.webClientBuilder = builder;
-       this. restTemplate = restTemplate;*//*
-    }
-*/
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String authorizationHeader =
             exchange.getRequest().getHeaders().getFirst(jwtConfig.getHeader());
-
-        if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getPrefix())) {
-            throw new UnauthorizedException("missing authorization header");
-        }
+        try{
+            if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getPrefix())) {
+                throw new UnauthorizedException("missing authorization header");
+            }
 //        if (authorizationHeader != null && authorizationHeader.startsWith(jwtConfig.getPrefix())) {
             String token = authorizationHeader.replace(jwtConfig.getPrefix(), "");
-            try {
-                Claims claims =
-                    Jwts.parserBuilder()
-                        .setSigningKey(jwtConfig.getSecret())
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody();
+            Claims claims =
+                Jwts.parserBuilder()
+                    .setSigningKey(jwtConfig.getSecret())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
 
-            }
-            catch (ExpiredJwtException e) {
-                return Mono.error(new UnauthorizedException("JWT token has expired"));
-            }
-            catch (Exception e) {
-                return Mono.error(new UnauthorizedException("Invalid jwt token"));
-            }
-    //     }
+        }
+        catch (ExpiredJwtException e) {
+            return Mono.error(new UnauthorizedException("JWT token has expired"));
+        }
+        catch (Exception e) {
+            return Mono.error(new UnauthorizedException("Invalid jwt token"));
+        }
+        //     }
         return chain.filter(exchange);
     }
 }
@@ -154,7 +132,7 @@ public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFi
             }
             return null;
         });*/
- //   }
+//   }
 
 
 
@@ -191,4 +169,3 @@ public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFi
         return chain.filter(exchange);
     }
 */
-

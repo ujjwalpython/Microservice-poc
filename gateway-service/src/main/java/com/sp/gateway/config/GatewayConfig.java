@@ -2,6 +2,7 @@ package com.sp.gateway.config;
 
 import com.sp.gateway.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -19,10 +20,10 @@ public class GatewayConfig {
 //        this.authClient = authClient;
 //    }
 //    private AuthClient authClient;
-    private JwtAuthenticationFilter filter;
+@Autowired
+private RouteValidator validator;
 
-    @Autowired
-    private RouteValidator validator;
+    private JwtAuthenticationFilter filter;
 
     @Bean
     public JwtConfig jwtConfig() {
@@ -40,18 +41,25 @@ public class GatewayConfig {
         return builder.routes().route("auth", r -> r.path("/auth/**").filters(f -> f.filter(filter)).uri("lb://auth-service"))
             .route("users", r -> r.path("/users/**").filters(f -> f.filter(filter)).uri("lb://user-post-service"))
             .route("posts", r -> r.path("/posts/**").filters(f -> f.filter(filter)).uri("lb://post-service"))
+/*
+            .route("tax", r -> r.path("/tax/**").filters(f -> f.filter(filter)).uri("lb://tax-service"))
+*/
             /*.route("hello", r -> r.path("/hello/**").filters(f -> f.filter(filter)).uri("lb://hello"))*/.build();
     }
-
-    /*@Bean
+    @Bean
     @LoadBalanced
     public WebClient.Builder loadBalancedWebClientBuilder() {
         return WebClient.builder();
     }
 
+    /*
     @Bean
     @LoadBalanced
     public RestTemplate loadBalanceTemp() {
         return new RestTemplate();
     }*/
+    @Bean
+    public WebProperties.Resources getWebResource(){
+        return new WebProperties.Resources();
+    }
 }
