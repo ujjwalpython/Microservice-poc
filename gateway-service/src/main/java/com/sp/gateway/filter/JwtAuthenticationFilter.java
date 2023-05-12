@@ -1,64 +1,60 @@
 package com.sp.gateway.filter;
 
-import com.sp.commonservice.security.JwtConfig;
+
+import com.sp.gateway.config.JwtConfig;
+import com.sp.gateway.config.RouteValidator;
 import com.sp.gateway.expcetions.UnauthorizedException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import java.util.Date;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
+
 
 @Component
 public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config>*/ {
 
-//    private final RouteValidator validator;
 
     @Autowired
     private JwtConfig jwtConfig;
-//    private final AuthClient authClient;
-
-   /* private final WebClient.Builder webClientBuilder;
-    private final RestTemplate restTemplate;
-*/
-   /* public JwtAuthenticationFilter(RouteValidator validator, *//*AuthClient authClient,*//* JwtConfig jwtConfig*//* WebClient.Builder builder, RestTemplate restTemplate*//*) {
-        this.validator = validator;
-//        this.authClient = authClient;
-        this.jwtConfig = jwtConfig;
-        *//*this.webClientBuilder = builder;
-       this. restTemplate = restTemplate;*//*
-    }
-*/
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String authorizationHeader =
             exchange.getRequest().getHeaders().getFirst(jwtConfig.getHeader());
         try{
-        if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getPrefix())) {
-            throw new UnauthorizedException("missing authorization header");
-        }
+            if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getPrefix())) {
+                throw new UnauthorizedException("missing authorization header");
+            }
 //        if (authorizationHeader != null && authorizationHeader.startsWith(jwtConfig.getPrefix())) {
             String token = authorizationHeader.replace(jwtConfig.getPrefix(), "");
-                Claims claims =
-                    Jwts.parserBuilder()
-                        .setSigningKey(jwtConfig.getSecret())
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody();
+            Claims claims =
+                Jwts.parserBuilder()
+                    .setSigningKey(jwtConfig.getSecret())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
 
-            }
-            catch (ExpiredJwtException e) {
-                return Mono.error(new UnauthorizedException("JWT token has expired"));
-            }
-            catch (Exception e) {
-                return Mono.error(new UnauthorizedException("Invalid jwt token"));
-            }
-    //     }
+        }
+        catch (ExpiredJwtException e) {
+            return Mono.error(new UnauthorizedException("JWT token has expired"));
+        }
+        catch (Exception e) {
+            return Mono.error(new UnauthorizedException("Invalid jwt token"));
+        }
+        //     }
         return chain.filter(exchange);
     }
 }
@@ -136,7 +132,7 @@ public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFi
             }
             return null;
         });*/
- //   }
+//   }
 
 
 
@@ -173,4 +169,3 @@ public class JwtAuthenticationFilter implements GatewayFilter/*AbstractGatewayFi
         return chain.filter(exchange);
     }
 */
-
