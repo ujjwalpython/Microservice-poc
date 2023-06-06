@@ -26,10 +26,10 @@ public class PoolConfiguration {
       }
       List<UserPool> pools =
           Arrays.asList(
-              new UserPool(1L, "Auth Service", "auth@spring.com", passwordEncoder.encode("12345")),
-              new UserPool(2L, "Post Service", "post@spring.com", passwordEncoder.encode("12345")),
-              new UserPool(3L, "User Service", "user@spring.com", passwordEncoder.encode("12345")),
-              new UserPool(4L, "Service", "userpost@spring.com", passwordEncoder.encode("12345")));
+              new UserPool( "Auth Service", "auth@spring.com", passwordEncoder.encode("12345")),
+              new UserPool( "Post Service", "post@spring.com", passwordEncoder.encode("12345")),
+              new UserPool( "User Service", "user@spring.com", passwordEncoder.encode("12345")),
+              new UserPool( "Service", "userpost@spring.com", passwordEncoder.encode("12345")));
 
       this.userPoolRepository.saveAll(pools);
     };

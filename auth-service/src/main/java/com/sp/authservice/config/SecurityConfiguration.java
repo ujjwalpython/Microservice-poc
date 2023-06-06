@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,7 +28,7 @@ public class SecurityConfiguration {
 
   private final JwtConfig jwtConfig;
   private final AuthenticationProvider authenticationProvider;
-
+  private final AuthenticationEntryPoint authenticationEntryPoint;
    @Bean
    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
        return authenticationConfiguration.getAuthenticationManager();
@@ -43,18 +44,17 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
             request ->
                 request
-                    .requestMatchers(HttpMethod.POST, jwtConfig.getUri(),"/validateToken/**")
+                    .requestMatchers(HttpMethod.POST, jwtConfig.getUri(),"/validateToken/**","/register-user","/validate-otp","/otp-login")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
         .formLogin().disable()
         .authenticationProvider(authenticationProvider)
         .apply(MyCustomDsl.customDsl()).and()
-        .exceptionHandling(
-            httpSecurityExceptionHandlingConfigurer ->
+        .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+           /* httpSecurityExceptionHandlingConfigurer ->
                 httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(
-                    (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED)));
-
+                    (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED)))*/;
     return http.build();
   }
 }
