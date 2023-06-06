@@ -38,7 +38,7 @@ private RouteValidator validator;
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         filter = jwtAuthenticationFilter();
-        return builder.routes().route("auth", r -> r.path("/auth/**").filters(f -> f.filter(filter)).uri("lb://auth-service"))
+        return builder.routes()/*.route("auth", r -> r.path("/auth/**").filters(f -> f.filter(filter)).uri("lb://auth-service"))*/
             .route("users", r -> r.path("/users/**").filters(f -> f.filter(filter)).uri("lb://user-post-service"))
             .route("posts", r -> r.path("/posts/**").filters(f -> f.filter(filter)).uri("lb://post-service"))
 /*

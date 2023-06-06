@@ -28,8 +28,22 @@ spring:
         show-sql: true
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
+    redis:
+        database: 0
+        host: 127.0.0.1
+        port: 6379
+        timeout: 60000
 logging:
     level:
         root: info
     pattern:
             level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+twilio:
+    account:
+        sid: AC0dac0d82def301d3eda275ca6c9b90c5
+    auth:
+        token: d05aec82e72ae63edd198e3a3317b5a6
+    phone:
+        number: +14253639525
+

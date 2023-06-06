@@ -40,7 +40,7 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
     public JwtUserAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager,JwtConfig jwtConfig) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
-        setFilterProcessesUrl("/auth/**");
+        setFilterProcessesUrl("/login");
     }
     @Override
     public Authentication attemptAuthentication(
@@ -48,7 +48,6 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
 
         System.out.println("[][][][failed to get the solution matters");
         try {
-
             // 1. Get credentials from request
             UserCredentials userCredentials =
                 new ObjectMapper().readValue(request.getInputStream(), UserCredentials.class);
